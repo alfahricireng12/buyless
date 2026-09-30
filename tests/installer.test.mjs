@@ -6,10 +6,13 @@ import path from 'node:path';
 import { run, parse } from '../bin/buyless.mjs';
 
 function context(t) {
-  const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'buyless-test-'));
+  // macOS exposes /var as a link to /private/var. Use the physical temp path
+  // so the link-safety check tests our fixture, not that OS-managed alias.
+  const tempRoot = fs.realpathSync(os.tmpdir());
+  const temp = fs.mkdtempSync(path.join(tempRoot, 'buyless-test-'));
   t.after(() => {
     // Only the exact temporary directory created by this test is removed.
-    assert.equal(path.dirname(temp), os.tmpdir());
+    assert.equal(path.dirname(temp), tempRoot);
     assert.ok(path.basename(temp).startsWith('buyless-test-'));
     fs.rmSync(temp, { recursive: true, force: true });
   });
