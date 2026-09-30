@@ -2,6 +2,10 @@
 
 ![BuyLess wordmark](assets/buyless-readme-wordmark.png)
 
+[![Skill checks](https://github.com/alfahricireng12/buyless/actions/workflows/checks.yml/badge.svg)](https://github.com/alfahricireng12/buyless/actions/workflows/checks.yml)
+
+[Install the plugin](#install-as-a-chatgpt-or-codex-plugin) · [Install a local skill](#install-as-a-local-skill) · [Download the latest release](https://github.com/alfahricireng12/buyless/releases/latest) · [Join the discussion](https://github.com/alfahricireng12/buyless/discussions)
+
 **Spend less. Know why.**
 
 A shopping research **skill for your AI**. Tell it what you want and where you are. BuyLess guides your assistant through nearby stores, domestic marketplaces, overseas sellers, coupons, and the evidence behind the cheapest comparable options.
@@ -173,6 +177,8 @@ Buying, reserving, contacting sellers, and scheduling alerts are separate user-a
 ## Contribute
 
 Contribute regional search knowledge, promotion edge cases, better evidence checks, or behavioral evaluations. Read [CONTRIBUTING.md](CONTRIBUTING.md), the [evaluation scenarios](evals/README.md), and [security boundaries](SECURITY.md).
+
+Use [Discussions](https://github.com/alfahricireng12/buyless/discussions) for questions and ideas, and [Issues](https://github.com/alfahricireng12/buyless/issues) for reproducible bugs. If BuyLess helps you, starring the repository helps others discover it.
 
 ```sh
 python scripts/validate_repo.py
