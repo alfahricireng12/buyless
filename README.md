@@ -1,6 +1,6 @@
 # BuyLess
 
-![BuyLess logo](assets/buyless-logo.png)
+![BuyLess wordmark](assets/buyless-readme-wordmark.png)
 
 **Spend less. Know why.**
 
