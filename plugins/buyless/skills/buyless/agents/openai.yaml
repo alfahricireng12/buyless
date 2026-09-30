@@ -1,0 +1,8 @@
+interface:
+  display_name: "BuyLess"
+  short_description: "Find lower trustworthy prices near you"
+  default_prompt: "Use $buyless: I want to buy a product in my city and country."
+  icon_small: "./assets/buyless-icon.png"
+  icon_large: "./assets/buyless-logo.png"
+policy:
+  allow_implicit_invocation: true

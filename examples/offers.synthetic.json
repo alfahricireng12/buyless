@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "location": {"label": "Jakarta, Indonesia — illustrative city reference point", "radius_km": 10},
+  "checked_at": "2026-09-27T12:00:00+07:00",
+  "offers": [
+    {
+      "id": "domestic-a", "product_group": "Example L11 / 8GB / 256GB / 1 unit",
+      "title": "Fictional Example L11 laptop", "seller": "Fictional Domestic A",
+      "url": "https://a.example.invalid/l11", "currency": "IDR",
+      "condition": "new", "warranty": "same illustrative warranty",
+      "fulfillment": "delivery", "match": "confirmed", "eligible": true, "available": true,
+      "certainty": "observed", "item_price": "4200000", "shipping": "25000", "fees": "0", "import_charges": "0",
+      "cashback": "100000",
+      "promotions": [{"code": "EXAMPLE10", "kind": "percent", "value": "10", "cap": "300000", "minimum": "3000000", "eligibility": "confirmed", "validity_confirmed": true, "expires_at": "2026-10-01T00:00:00+07:00", "source_url": "https://a.example.invalid/promo"}]
+    },
+    {
+      "id": "domestic-b", "product_group": "Example L11 / 8GB / 256GB / 1 unit",
+      "title": "Fictional Example L11 laptop", "seller": "Fictional Domestic B",
+      "url": "https://b.example.invalid/l11", "currency": "IDR",
+      "condition": "new", "warranty": "same illustrative warranty",
+      "fulfillment": "delivery", "match": "confirmed", "eligible": true, "available": true,
+      "certainty": "observed", "item_price": "3980000", "shipping": "20000", "fees": "0", "import_charges": "0"
+    },
+    {
+      "id": "pickup", "product_group": "Example L11 / 8GB / 256GB / 1 unit",
+      "title": "Fictional Example L11 laptop", "seller": "Fictional Nearby Shop",
+      "url": "https://nearby.example.invalid/l11", "currency": "IDR",
+      "condition": "new", "warranty": "same illustrative warranty",
+      "fulfillment": "pickup", "distance_km": "3.2", "match": "confirmed", "eligible": true, "available": true,
+      "certainty": "observed", "item_price": "3850000", "shipping": "0", "fees": "0", "import_charges": "0", "travel_cost": null
+    },
+    {
+      "id": "overseas", "product_group": "Example L11 / 8GB / 256GB / 1 unit",
+      "title": "Fictional Example L11 laptop", "seller": "Fictional Overseas Shop",
+      "url": "https://overseas.example.invalid/l11", "currency": "USD",
+      "condition": "new", "warranty": "overseas-only warranty",
+      "fulfillment": "delivery", "match": "confirmed", "eligible": true, "available": true,
+      "certainty": "estimated", "item_price": "210", "shipping": "35", "fees": null, "import_charges": null
+    },
+    {
+      "id": "shipping-unknown", "product_group": "Example L11 / 8GB / 256GB / 1 unit",
+      "title": "Fictional Example L11 laptop", "seller": "Fictional Incomplete Quote",
+      "url": "https://incomplete.example.invalid/l11", "currency": "IDR",
+      "condition": "new", "warranty": "same illustrative warranty",
+      "fulfillment": "delivery", "match": "confirmed", "eligible": true, "available": true,
+      "certainty": "observed", "item_price": "3700000", "shipping": null, "fees": null, "import_charges": "0"
+    },
+    {
+      "id": "wrong-variant", "product_group": "Example L11 / 4GB / 128GB / 1 unit",
+      "title": "Fictional different variant", "seller": "Fictional Variant Shop",
+      "url": "https://variant.example.invalid/l11", "currency": "IDR",
+      "condition": "new", "warranty": "same illustrative warranty",
+      "fulfillment": "delivery", "match": "rejected", "eligible": true, "available": true,
+      "certainty": "observed", "item_price": "2500000", "shipping": "0", "fees": "0", "import_charges": "0"
+    }
+  ]
+}

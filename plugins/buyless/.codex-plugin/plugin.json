@@ -1,0 +1,29 @@
+{
+  "name": "buyless",
+  "version": "0.5.0",
+  "description": "Find the lowest trustworthy product price for a user's location with coupons, shipping, and seller evidence.",
+  "author": {
+    "name": "devino.als"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "BuyLess",
+    "shortDescription": "Find trusted deals nearby",
+    "longDescription": "Tell BuyLess what you want and where you are. It compares nearby, domestic, and overseas offers using the host's web tools, checks coupons and total costs, and explains seller evidence.",
+    "developerName": "devino.als",
+    "category": "Shopping",
+    "capabilities": ["Web research", "Price comparison"],
+    "defaultPrompt": [
+      "I want to buy a laptop in Jakarta.",
+      "Find the cheapest genuine headphones in Miami.",
+      "Compare local and overseas camera prices in Osaka."
+    ],
+    "websiteURL": "https://github.com/alfahricireng12/buyless",
+    "supportURL": "https://github.com/alfahricireng12/buyless/blob/main/SUPPORT.md",
+    "privacyPolicyURL": "https://github.com/alfahricireng12/buyless/blob/main/PRIVACY.md",
+    "termsOfServiceURL": "https://github.com/alfahricireng12/buyless/blob/main/TERMS.md",
+    "brandColor": "#16A34A",
+    "composerIcon": "./assets/buyless-icon.png",
+    "logo": "./assets/buyless-logo.png"
+  }
+}

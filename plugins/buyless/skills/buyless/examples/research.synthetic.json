@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "product": "Example L11 8GB/256GB new",
+  "location": "Jakarta, Indonesia",
+  "checked_at": "2026-09-28T10:00:00+07:00",
+  "stop_reason": "budget",
+  "families": {
+    "nearby": {
+      "scope": "applicable"
+    },
+    "domestic_marketplaces": {
+      "scope": "applicable"
+    },
+    "domestic_retailers": {
+      "scope": "applicable"
+    },
+    "international": {
+      "scope": "applicable"
+    },
+    "promotions": {
+      "scope": "applicable"
+    },
+    "manufacturer": {
+      "scope": "applicable"
+    }
+  },
+  "attempts": [
+    {
+      "family": "nearby",
+      "source_key": "fictional-nearby",
+      "url": "https://example.invalid/nearby",
+      "checked_at": "2026-09-28T10:00:00+07:00",
+      "status": "checked",
+      "outcome": "SYNTHETIC: source inspected"
+    },
+    {
+      "family": "domestic_marketplaces",
+      "source_key": "fictional-domestic_marketplaces",
+      "url": "https://example.invalid/domestic_marketplaces",
+      "checked_at": "2026-09-28T10:00:00+07:00",
+      "status": "checked",
+      "outcome": "SYNTHETIC: source inspected"
+    },
+    {
+      "family": "domestic_retailers",
+      "source_key": "fictional-domestic_retailers",
+      "url": "https://example.invalid/domestic_retailers",
+      "checked_at": "2026-09-28T10:00:00+07:00",
+      "status": "checked",
+      "outcome": "SYNTHETIC: source inspected"
+    },
+    {
+      "family": "international",
+      "source_key": "fictional-international",
+      "url": "https://example.invalid/international",
+      "checked_at": "2026-09-28T10:00:00+07:00",
+      "status": "blocked",
+      "outcome": "SYNTHETIC: destination page blocked"
+    },
+    {
+      "family": "promotions",
+      "source_key": "fictional-promotions",
+      "url": "https://example.invalid/promotions",
+      "checked_at": "2026-09-28T10:00:00+07:00",
+      "status": "checked",
+      "outcome": "SYNTHETIC: source inspected"
+    },
+    {
+      "family": "manufacturer",
+      "source_key": "fictional-manufacturer",
+      "url": "https://example.invalid/manufacturer",
+      "checked_at": "2026-09-28T10:00:00+07:00",
+      "status": "checked",
+      "outcome": "SYNTHETIC: source inspected"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "domestic-a",
+      "product_key": "Example L11/new/8GB/256GB/ID",
+      "seller_key": "example-retailer-id",
+      "evidence": [
+        {
+          "id": "e0",
+          "claim": "product_identity",
+          "url": "https://example.invalid/evidence/0",
+          "checked_at": "2026-09-28T10:00:00+07:00",
+          "product_key": "Example L11/new/8GB/256GB/ID",
+          "seller_key": "example-retailer-id",
+          "authority": "manufacturer",
+          "finding": "supports",
+          "currency": "current",
+          "observation": "SYNTHETIC: scope-matched product_identity observation; no real store or product is represented."
+        },
+        {
+          "id": "e1",
+          "claim": "seller_authorization",
+          "url": "https://example.invalid/evidence/1",
+          "checked_at": "2026-09-28T10:00:00+07:00",
+          "product_key": "Example L11/new/8GB/256GB/ID",
+          "seller_key": "example-retailer-id",
+          "authority": "manufacturer",
+          "finding": "supports",
+          "currency": "current",
+          "observation": "SYNTHETIC: scope-matched seller_authorization observation; no real store or product is represented."
+        },
+        {
+          "id": "e2",
+          "claim": "warranty",
+          "url": "https://example.invalid/evidence/2",
+          "checked_at": "2026-09-28T10:00:00+07:00",
+          "product_key": "Example L11/new/8GB/256GB/ID",
+          "seller_key": "example-retailer-id",
+          "authority": "manufacturer",
+          "finding": "supports",
+          "currency": "current",
+          "observation": "SYNTHETIC: scope-matched warranty observation; no real store or product is represented."
+        },
+        {
+          "id": "e3",
+          "claim": "returns",
+          "url": "https://example.invalid/evidence/3",
+          "checked_at": "2026-09-28T10:00:00+07:00",
+          "product_key": "Example L11/new/8GB/256GB/ID",
+          "seller_key": "example-retailer-id",
+          "authority": "seller",
+          "finding": "supports",
+          "currency": "current",
+          "observation": "SYNTHETIC: scope-matched returns observation; no real store or product is represented."
+        }
+      ]
+    },
+    {
+      "id": "shipping-unknown",
+      "product_key": "Example L11/new/8GB/256GB/ID",
+      "seller_key": "unknown-retailer",
+      "evidence": []
+    }
+  ]
+}

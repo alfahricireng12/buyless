@@ -1,0 +1,13 @@
+{
+  "name": "buyless-skill-cli",
+  "version": "0.5.0",
+  "private": true,
+  "description": "Install the BuyLess shopping research skill in your AI assistant.",
+  "author": "devino.als",
+  "license": "MIT",
+  "type": "module",
+  "bin": { "buyless": "bin/buyless.mjs" },
+  "engines": { "node": ">=20" },
+  "files": ["bin/", "SKILL.md", "LICENSE", "README.md", "CONTRIBUTING.md", "SECURITY.md", "docs/", "agents/", "assets/", "references/", "scripts/*.py", "examples/", "evals/", "plugins/", ".agents/plugins/marketplace.json", "tests/*.py", "tests/*.mjs"],
+  "scripts": { "test": "node --test tests/installer.test.mjs" }
+}
