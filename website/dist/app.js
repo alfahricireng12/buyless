@@ -2,8 +2,6 @@
   'use strict';
   const root = document.documentElement;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const notesButton = document.getElementById('notes-toggle');
-  const notesButtons = [notesButton, document.getElementById('notes-float')].filter(Boolean);
   const progress = document.querySelector('.reading-progress');
   const introPoster = document.querySelector('.intro-poster');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
@@ -100,18 +98,6 @@
     scheduleScroll();
   };
   reducedMotion.addEventListener('change', setMotion);
-  const toggleNotes = () => {
-    const enabled = !root.classList.contains('notes-mode');
-    root.classList.toggle('notes-mode', enabled);
-    document.body.classList.toggle('notes-mode', enabled);
-    notesButtons.forEach((button) => {
-      button.setAttribute('aria-pressed', String(enabled));
-      const label = button.querySelector('#notes-label, [data-notes-label]') || button;
-      label.textContent = enabled ? 'Notes on' : 'Notes off';
-    });
-    scheduleScroll();
-  };
-  notesButtons.forEach((button) => button.addEventListener('click', toggleNotes));
   const reveals = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {

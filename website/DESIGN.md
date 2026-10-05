@@ -26,7 +26,7 @@ The home entrance presents the BuyLess wordmark at the center for 1.7 seconds, i
 
 Header glyphs enter in sequence. The poster reveals and responds subtly to a fine-pointer hover. Scroll sets a bounded `--phase` on each exhibit in one rAF pass; sticky stages move the vertical collage and circular diagram. Prices transition on preset changes. No scroll interception, automatic purchases, fake live research, or invented testimonials.
 
-Two synchronized Notes controls expose optional annotations. Essential claims, location requirements, example disclaimers, and installation requirements are always visible. Chapter links remain available throughout the page.
+Annotations remain visible without a Notes toggle. The Triangle annotation sits below the evidence composition and its footer in normal document flow, so it cannot cover the graphic when disclosures expand. Essential claims, location requirements, example disclaimers, and installation requirements are always visible. Chapter links remain available throughout the page.
 
 The device's reduced-motion preference disables decorative motion and sets geometry to a readable midpoint. The brief ambient entrance pauses offscreen or when the tab is hidden; ongoing geometric motion follows user scrolling. Phone layouts stack the compositions and avoid pinning. Short landscape viewports also disable pinning to avoid overlapping chapters.
 
