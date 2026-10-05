@@ -1,6 +1,6 @@
 # BuyLess introduction website
 
-A dependency-free static website with an animated editorial layout, accessible motion control, fictional research walkthrough, evidence disclosures, and real installation commands.
+A dependency-free static exhibition inspired by Obys Format, with geometric BuyLess lettering, the original green brand icon, monochrome posters, and vertical, horizontal, circular, and triangular chapters. Scroll motion, pointer tilt, animated example totals, and an optional Notes mode complement reduced-motion support, evidence disclosures, and real installation commands.
 
 Public URL: <https://alfahricireng12.github.io/buyless/>. The `Deploy BuyLess website` workflow publishes `website/dist` when those files change on `main`, or when manually dispatched. GitHub Pages must use GitHub Actions as its source.
 

@@ -2,28 +2,34 @@
 
 ## Direction
 
-A kinetic editorial introduction: enormous condensed typography, numbered chapters, an oversized green asterisk, and a price receipt that explains the research. The visual reference is the typographic scale, geometric rhythm, and spacious composition of Obys Format; no reference images or page content are reused.
+An exhibition of shopping research, inspired by the graphic composition of Obys Format. The defining devices are a full-width custom geometric BuyLess masthead, a continuous charcoal canvas, isolated monochrome photographic posters, and four geometric chapters. The reference informs scale, negative space, micro captions, and spatial motion; its artwork, logos, and content are not reused.
 
-The site introduces an existing AI skill. It does not search shops itself. Every sample price is fictional and explicitly marked. Calls to action lead to the real repository, release, and installation documentation.
+The BuyLess identity stays visible through the original green icon, green LESS lettering and accents, location-led requests, real-cost comparisons, coupon checks, evidence, and links to the real skill. This is an introduction to an existing AI skill, not a shopping backend. Demo prices are fictional and explicitly labeled.
 
-## Tokens
+## Tokens and ownership
 
-- Ink: `#1b211c`; paper: `#eff2e9`; accent: `#b2f675`; brand emerald: `#079c47`.
-- Display: Barlow Condensed 600–700; body: DM Sans 400–700; utility: IBM Plex Mono 400–500. System fallbacks preserve readability if Google Fonts is unavailable.
-- Desktop margins: 3.3vw; mobile: 20px. Single 680px mobile and 1000px tablet breakpoint.
-- Display headings use fluid sizes and short lines. Narrative text stays around 400px wide.
-- Rounded controls contrast with sharp editorial sections and the physical receipt layout.
+`website/dist/styles.css` owns the runtime tokens: ink `#222222`, paper `#f5f5f2`, green `#08b95a`, line `#555553`, and secondary text `#b7b7b0`. The native masthead SVG uses the same paper and green. Header glyphs are a custom vector display treatment; body uses DM Sans, utility captions use IBM Plex Mono, with system fallbacks.
+
+Desktop exterior margins are 16px and chapter gutters 4%. Mobile uses 12px exterior and 20px chapter gutters. Breakpoints: 680px and 1000px. Square controls and fine rules replace pill CTAs. On light panels, focus outlines use ink for contrast; on charcoal, green.
+
+## Chapter grammar
+
+1. Vertical: a narrow request poster, a secondary image strip, and a green location stamp. A product and city start the workflow; country is requested when needed. Budget, condition, and pickup radius remain optional.
+2. Horizontal: a wide comparison sheet. Presets update explicitly fictional offers; the walkthrough exposes product match, known shipping, coupons, and evidence.
+3. Circle: discovery radiates from the destination. Circle text and the arc rotate with native scroll while essential labels stay upright.
+4. Triangle: product, seller, and purchase terms meet in evidence. Native disclosures explain limitations.
+5. Grid: the original icon and real host-specific installation commands. Web access remains the host's responsibility.
 
 ## Motion and interaction
 
-Native scroll, headline entrance, reveal transitions, rotating brand punctuation, moving typographic ribbon, animated search-radius diagram, and an opt-in walkthrough. No scroll interception or hidden navigation.
+Header glyphs enter in sequence. The poster reveals and responds subtly to a fine-pointer hover. Scroll sets a bounded `--phase` on each exhibit in one rAF pass; sticky stages move the vertical collage and circular diagram. Prices transition on preset changes. No scroll interception, automatic purchases, fake live research, or invented testimonials.
 
-Reduced-motion preference disables animation and shows all content. A persistent motion control also stops animations. Ambient animations pause offscreen and in hidden tabs. The full story and installation commands remain readable without JavaScript.
+Two synchronized Notes controls expose optional annotations. Essential claims, location requirements, example disclaimers, and installation requirements are always visible. Chapter links remain available throughout the page.
 
-Location examples use buttons with `aria-pressed`; the walkthrough has a live status. Evidence disclosures use native `details`. Installation commands can be copied; clipboard refusal selects the text and explains manual copying.
+The device's reduced-motion preference disables decorative motion and sets geometry to a readable midpoint. The brief ambient entrance pauses offscreen or when the tab is hidden; ongoing geometric motion follows user scrolling. Phone layouts stack the compositions and avoid pinning. Short landscape viewports also disable pinning to avoid overlapping chapters.
 
-## Content and responsive contract
+## Assets and truthfulness
 
-English introduction for an international project. Explain destination currency and language rather than silently translating the entire marketing site. Keep product claims aligned with the repository: lowest comparable cost among checked offers, visible unknown fees, evidence-based trust, and no physical-authenticity guarantee.
+`assets/buyless-icon.png` is the existing brand asset. `assets/masthead.svg` is original code-native exhibition lettering, not a replacement for the plugin icon. `assets/editorial-headphones.png` is an original generated, unbranded monochrome still-life used decoratively; it is not an actual listing or evidence of a specific product.
 
-At narrow widths the receipt and research path stack, the radar scales to its column, and secondary nav links disappear while the installation link remains. All primary controls have at least 44px targets. Maintain visible keyboard focus, native reading order, a skip link, and no horizontal document overflow.
+All content remains in English for this international introduction. Real shopping reports follow destination language and currency unless explicitly overridden. Keep the lowest comparable cost objective qualified by checked offers, and never guarantee physical authenticity from web pages.

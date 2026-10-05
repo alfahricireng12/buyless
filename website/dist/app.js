@@ -2,26 +2,109 @@
   'use strict';
   const root = document.documentElement;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const motionButton = document.getElementById('motion-toggle');
+  const notesButton = document.getElementById('notes-toggle');
+  const notesButtons = [notesButton, document.getElementById('notes-float')].filter(Boolean);
+  const progress = document.querySelector('.reading-progress');
+  const introPoster = document.querySelector('.intro-poster');
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const chapters = [...document.querySelectorAll('.chapter-nav a[href^="#"]')]
+    .map((link) => ({ link, target: document.getElementById(link.hash.slice(1)) }))
+    .filter(({ target }) => target);
+  const exhibits = [...document.querySelectorAll('[data-choreo]')]
+    .map((section) => ({ section, stage: section.querySelector('.exhibit-stage') }));
   let paused = reducedMotion.matches;
-  let manualMotionChoice = false;
-  const setMotion = (value) => {
-    value = value || reducedMotion.matches;
-    paused = value;
-    root.classList.toggle('motion-paused', value);
-    root.classList.toggle('js-motion', !value);
-    motionButton.setAttribute('aria-pressed', String(value));
-    motionButton.disabled = reducedMotion.matches;
-    document.getElementById('motion-label').textContent = reducedMotion.matches ? 'Reduced motion' : value ? 'Enable motion' : 'Pause motion';
+  let scrollFrame = 0;
+  let tiltFrame = 0;
+  let pointerPosition = null;
+  let priceAnimation = null;
+  const clamp = (value) => Math.min(1, Math.max(0, value));
+
+  const updateScroll = () => {
+    scrollFrame = 0;
+    if (document.hidden) return;
+
+    // Read geometry as one batch before writing the exhibition's visual state.
+    const viewportHeight = window.innerHeight;
+    const range = root.scrollHeight - viewportHeight;
+    const pageProgress = clamp(range > 0 ? window.scrollY / range : 0);
+    const geometry = exhibits.map(({ section, stage }) => {
+      const bounds = section.getBoundingClientRect();
+      const travel = Math.max(bounds.height - viewportHeight, viewportHeight * 0.5);
+      return { section, stage, phase: paused ? 0.5 : clamp(-bounds.top / travel) };
+    });
+    const chapterGeometry = chapters.map(({ link, target }) => ({ link, bounds: target.getBoundingClientRect() }));
+    const chapterLine = viewportHeight * 0.42;
+    const currentChapter = (chapterGeometry.find(({ bounds }) => bounds.top <= chapterLine && bounds.bottom > chapterLine)
+      || chapterGeometry.find(({ bounds }) => bounds.top < viewportHeight && bounds.bottom > 0))?.link;
+
+    if (progress) progress.style.transform = `scaleX(${pageProgress})`;
+    geometry.forEach(({ section, stage, phase }) => {
+      const value = phase.toFixed(4);
+      section.style.setProperty('--phase', value);
+      if (stage) stage.style.setProperty('--phase', value);
+    });
+    chapters.forEach(({ link }) => {
+      if (link === currentChapter) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
   };
-  setMotion(paused);
-  motionButton.addEventListener('click', () => {
-    manualMotionChoice = true;
-    setMotion(!paused);
-  });
-  reducedMotion.addEventListener('change', (event) => {
-    setMotion(manualMotionChoice ? paused : event.matches);
-  });
+  const scheduleScroll = () => {
+    if (!scrollFrame && !document.hidden) scrollFrame = window.requestAnimationFrame(updateScroll);
+  };
+  const resetPosterTilt = () => {
+    if (tiltFrame) window.cancelAnimationFrame(tiltFrame);
+    tiltFrame = 0;
+    pointerPosition = null;
+    if (introPoster) {
+      introPoster.style.setProperty('--tilt-x', '0deg');
+      introPoster.style.setProperty('--tilt-y', '0deg');
+    }
+  };
+  const updatePosterTilt = () => {
+    tiltFrame = 0;
+    if (!introPoster || !pointerPosition || paused || document.hidden || !finePointer.matches) {
+      resetPosterTilt();
+      return;
+    }
+    const bounds = introPoster.getBoundingClientRect();
+    const horizontal = clamp((pointerPosition.x - bounds.left) / Math.max(bounds.width, 1)) * 2 - 1;
+    const vertical = clamp((pointerPosition.y - bounds.top) / Math.max(bounds.height, 1)) * 2 - 1;
+    introPoster.style.setProperty('--tilt-x', `${(-vertical * 4).toFixed(2)}deg`);
+    introPoster.style.setProperty('--tilt-y', `${(horizontal * 4).toFixed(2)}deg`);
+  };
+  introPoster?.addEventListener('pointermove', (event) => {
+    if (paused || document.hidden || !finePointer.matches) return;
+    pointerPosition = { x: event.clientX, y: event.clientY };
+    if (!tiltFrame) tiltFrame = window.requestAnimationFrame(updatePosterTilt);
+  }, { passive: true });
+  introPoster?.addEventListener('pointerleave', resetPosterTilt, { passive: true });
+  finePointer.addEventListener('change', resetPosterTilt);
+  const setMotion = () => {
+    paused = reducedMotion.matches;
+    root.classList.toggle('motion-paused', paused);
+    root.classList.toggle('js-motion', !paused);
+    if (paused) {
+      document.querySelectorAll('.reveal').forEach((element) => element.classList.add('is-visible'));
+      resetPosterTilt();
+      priceAnimation?.cancel();
+      priceAnimation = null;
+    }
+    updateAmbient();
+    scheduleScroll();
+  };
+  reducedMotion.addEventListener('change', setMotion);
+  const toggleNotes = () => {
+    const enabled = !root.classList.contains('notes-mode');
+    root.classList.toggle('notes-mode', enabled);
+    document.body.classList.toggle('notes-mode', enabled);
+    notesButtons.forEach((button) => {
+      button.setAttribute('aria-pressed', String(enabled));
+      const label = button.querySelector('#notes-label, [data-notes-label]') || button;
+      label.textContent = enabled ? 'Notes on' : 'Notes off';
+    });
+    scheduleScroll();
+  };
+  notesButtons.forEach((button) => button.addEventListener('click', toggleNotes));
   const reveals = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -33,30 +116,34 @@
   document.querySelectorAll('.reveal').forEach((element) => reveals.observe(element));
 
   // Ambient animation is suspended outside the viewport and while the tab is hidden.
-  const ambient = document.querySelectorAll('.asterisk, .tiny-orbit, .ticker-track, .radar-sweep, .radar-point, .footer-star');
+  const ambient = document.querySelectorAll('[data-ambient], .asterisk, .tiny-orbit, .ticker-track, .radar-sweep, .radar-point, .footer-star, .gallery-marquee-track');
   const visibleAmbient = new Set();
   const updateAmbient = () => ambient.forEach((element) => {
-    element.style.animationPlayState = !document.hidden && visibleAmbient.has(element) ? 'running' : 'paused';
+    element.style.animationPlayState = !paused && !document.hidden && visibleAmbient.has(element) ? 'running' : 'paused';
   });
   const ambientObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => entry.isIntersecting ? visibleAmbient.add(entry.target) : visibleAmbient.delete(entry.target));
     updateAmbient();
   });
   ambient.forEach((element) => ambientObserver.observe(element));
-  document.addEventListener('visibilitychange', updateAmbient);
-
-  const progress = document.querySelector('.reading-progress');
-  let framePending = false;
-  const updateScroll = () => {
-    const range = root.scrollHeight - window.innerHeight;
-    progress.style.transform = `scaleX(${range > 0 ? window.scrollY / range : 0})`;
-    framePending = false;
-  };
-  window.addEventListener('scroll', () => {
-    if (!framePending) { framePending = true; window.requestAnimationFrame(updateScroll); }
-  }, { passive: true });
-  window.addEventListener('resize', updateScroll);
-  updateScroll();
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && scrollFrame) {
+      window.cancelAnimationFrame(scrollFrame);
+      scrollFrame = 0;
+    }
+    if (document.hidden) {
+      resetPosterTilt();
+      priceAnimation?.cancel();
+      priceAnimation = null;
+    }
+    updateAmbient();
+    scheduleScroll();
+  });
+  window.addEventListener('scroll', scheduleScroll, { passive: true });
+  window.addEventListener('resize', scheduleScroll, { passive: true });
+  window.addEventListener('load', scheduleScroll, { once: true });
+  document.fonts?.ready.then(scheduleScroll);
+  setMotion();
 
   const scenarios = {
     manchester: { prompt: '“Find me headphones in Manchester.”', product: 'Wireless headphones · new · one item', total: '£189', item: '£209', coupon: '−£20', shipping: '£0', other: '£219 total', risky: '£139 + unknown fees' },
@@ -72,7 +159,18 @@
   const displayScenario = (key) => {
     const data = scenarios[key];
     Object.entries(data).forEach(([field, value]) => { document.getElementById(`demo-${field}`).textContent = value; });
-    document.getElementById('demo-total').classList.toggle('long-price', key === 'jakarta');
+    const total = document.getElementById('demo-total');
+    total.classList.toggle('long-price', key === 'jakarta');
+    priceAnimation?.cancel();
+    priceAnimation = null;
+    if (!paused && !document.hidden && typeof total.animate === 'function') {
+      const animation = total.animate([
+        { opacity: 0.3, transform: 'translateY(9px)' },
+        { opacity: 1, transform: 'translateY(0)' }
+      ], { duration: 450, easing: 'ease-out' });
+      priceAnimation = animation;
+      animation.onfinish = () => { if (priceAnimation === animation) priceAnimation = null; };
+    }
   };
   const resetDemo = () => {
     runId += 1;
