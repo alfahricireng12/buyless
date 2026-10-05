@@ -7,6 +7,8 @@ __pycache__/
 *.egg-info/
 build/
 dist/
+!website/dist/
+!website/dist/**
 .coverage
 *.db
 *.db-shm

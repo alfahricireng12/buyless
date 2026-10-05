@@ -4,7 +4,7 @@
 
 [![Skill checks](https://github.com/alfahricireng12/buyless/actions/workflows/checks.yml/badge.svg)](https://github.com/alfahricireng12/buyless/actions/workflows/checks.yml)
 
-[Install the plugin](#install-as-a-chatgpt-or-codex-plugin) · [Install a local skill](#install-as-a-local-skill) · [Download the latest release](https://github.com/alfahricireng12/buyless/releases/latest) · [Join the discussion](https://github.com/alfahricireng12/buyless/discussions)
+[Explore the website](https://alfahricireng12.github.io/buyless/) · [Install the plugin](#install-as-a-chatgpt-or-codex-plugin) · [Install a local skill](#install-as-a-local-skill) · [Download the latest release](https://github.com/alfahricireng12/buyless/releases/latest) · [Join the discussion](https://github.com/alfahricireng12/buyless/discussions)
 
 **Spend less. Know why.**
 

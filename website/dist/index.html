@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1b211c">
+  <meta name="description" content="Spend less. Know why. BuyLess is an open-source shopping research skill for your AI. One sentence. Your location. A better-informed purchase.">
+  <meta property="og:title" content="BuyLess — Spend less. Know why.">
+  <meta property="og:description" content="An open-source shopping research skill for your AI. Discover offers, compare real costs, and check the evidence.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://alfahricireng12.github.io/buyless/">
+  <meta property="og:image" content="https://alfahricireng12.github.io/buyless/assets/buyless-icon.png">
+  <meta property="og:image:alt" content="Green BuyLess icon with a downward price tag">
+  <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://alfahricireng12.github.io/buyless/">
+  <title>BuyLess — Spend less. Know why.</title>
+  <link rel="icon" type="image/png" href="assets/buyless-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="header">
+    <a class="brand" href="#top" aria-label="BuyLess home"><img src="assets/buyless-icon.png" alt="" width="36" height="36"><span>BuyLess<span class="brand-period" aria-hidden="true">✳</span></span></a>
+    <nav aria-label="Main navigation"><a href="#idea">The idea</a><a href="#in-action">In action</a><a class="nav-install" href="#install">Get the skill <span aria-hidden="true">↗</span></a></nav>
+  </header>
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-meta mono"><span>An open-source skill for your AI</span><span class="edition">Worldwide / Edition 001</span></div>
+      <h1 id="hero-title" class="hero-title" aria-label="Spend less."><span class="title-line"><span>SPEND</span><span class="asterisk" aria-hidden="true">✳</span></span><span class="title-line second"><span class="less">LESS.</span><span class="hero-aside"><span class="mono">A better way to find<br>your next good buy.</span><a href="#idea" class="scroll-cue" aria-label="Discover the BuyLess idea"><span aria-hidden="true">↓</span></a></span></span></h1>
+      <div class="hero-bottom"><p>All those tabs.<br>One better decision.</p><p class="hero-description">Tell your AI what you want and where you are. BuyLess helps it find the lowest comparable cost, then check the evidence behind the offer.</p><a class="pill light" href="#install">Meet your shopping skill <span aria-hidden="true">↗</span></a></div>
+      <div class="hero-baseline mono"><span>Less searching. More knowing.</span><span>Scroll to explore <span aria-hidden="true">↓</span></span></div>
+    </section>
+    <section class="idea section-pad" id="idea" aria-labelledby="idea-title">
+      <div class="section-label mono"><span>01 / The idea</span><span>Shopping, with a little more sense.</span></div>
+      <div class="idea-layout"><h2 id="idea-title" class="display reveal">THE INTERNET<br>IS A BIG STORE.<br><span class="muted">LET YOUR AI<br>DO THE WALKING.</span></h2><div class="idea-copy reveal"><span class="tiny-orbit" aria-hidden="true">✳</span><p>Finding a good price shouldn’t be a second job.</p><p class="body-copy">BuyLess gives your AI a research routine: discover sellers, match the exact product, check discounts, and compare the costs that matter. From the shop around the corner to a seller across the world.</p><p class="mono small-note">Your AI. Its web tools. Our open-source skill.<br>No BuyLess account or shared API key.</p></div></div>
+      <div class="ticker" aria-hidden="true"><div class="ticker-track"><span>FEWER TABS</span><i>✳</i><span>BETTER FINDS</span><i>✳</i><span>FEWER TABS</span><i>✳</i><span>BETTER FINDS</span><i>✳</i></div></div>
+    </section>
+    <section class="action section-pad" id="in-action" aria-labelledby="action-title">
+      <div class="section-label mono"><span>02 / In action</span><span>A small request. A proper search.</span></div>
+      <div class="action-heading"><h2 id="action-title" class="display reveal">ONE SENTENCE.<br><span class="outline">THAT’S ENOUGH.</span></h2><p class="body-copy reveal">Start with a product and a place.<br>BuyLess handles the research routine.<br>If your location is missing, it asks.</p></div>
+      <div class="demo" aria-label="Illustrative BuyLess research example">
+        <div class="demo-input"><div class="mono demo-overline"><span><span class="status-dot"></span> A request to your AI</span><span>Illustrative demo · not live prices</span></div><p id="demo-prompt" class="prompt">“Find me headphones in Manchester.”</p><div class="demo-controls"><div class="presets" role="group" aria-label="Choose an example location"><button type="button" data-scenario="manchester" aria-pressed="true">Manchester</button><button type="button" data-scenario="jakarta" aria-pressed="false">Jakarta</button><button type="button" data-scenario="osaka" aria-pressed="false">Osaka</button></div><button class="demo-play" id="demo-play" type="button">Explore the search <span aria-hidden="true">↗</span></button></div></div>
+        <div class="demo-output"><div class="research-path"><p class="mono small-note">What BuyLess guides your AI to check</p><ol class="research-steps"><li><span>01</span><div>Discover shops<small>Nearby · national · overseas</small></div><b aria-hidden="true">✓</b></li><li><span>02</span><div>Match the product<small>Model · variant · condition</small></div><b aria-hidden="true">✓</b></li><li><span>03</span><div>Check the real cost<small>Coupons · delivery · known fees</small></div><b aria-hidden="true">✓</b></li><li><span>04</span><div>Inspect the evidence<small>Seller · warranty · buyer protection</small></div><b aria-hidden="true">✓</b></li></ol><p class="mono demo-progress" id="demo-progress" role="status">Explore an illustrative comparison.</p></div><div class="receipt" id="receipt"><div class="receipt-top mono"><span>THE SHORTLIST</span><span aria-hidden="true">✳</span></div><div class="receipt-title"><span class="mono">Lowest checked comparable total</span><strong id="demo-total">£189</strong><span id="demo-product">Wireless headphones · new · one item</span></div><div class="receipt-line"><span>Offer B · domestic retailer</span><span class="evidence-tag">Evidence sufficient</span></div><div class="receipt-prices"><div><span>Item</span><span id="demo-item">£209</span></div><div><span>Eligible coupon</span><span id="demo-coupon">−£20</span></div><div><span>Delivery</span><span id="demo-shipping">£0</span></div></div><div class="other-offers"><div><span>Offer A</span><span id="demo-other">£219 total</span></div><div><span>Offer C <small>Seller evidence missing</small></span><span id="demo-risky">£139 + unknown fees</span></div></div><p class="receipt-foot">The cheapest sticker price isn’t always the cheapest comparable, supported offer.</p></div></div>
+      </div><p class="demo-note mono">Fictional offers explain the workflow. Real results require your AI’s web tools, sources, and a check time.</p>
+    </section>
+    <section class="world section-pad" id="world" aria-labelledby="world-title">
+      <div class="section-label mono"><span>03 / Your location, first</span><span>No fixed store list. No borders built in.</span></div>
+      <div class="world-layout"><div><h2 id="world-title" class="display reveal">GOOD FINDS.<br><span class="italic-word">ANYWHERE.</span></h2><p class="body-copy reveal">Your city is the starting point. Your AI discovers shops dynamically, searches in the local language, and checks which sellers actually serve your destination.</p><p class="mono small-note reveal">Local currency. Local context.<br>Your language preference always comes first.</p></div><div class="radar" aria-label="Search expands from nearby shops to domestic and eligible overseas sellers"><div class="radar-ring ring-one"></div><div class="radar-ring ring-two"></div><div class="radar-ring ring-three"></div><div class="radar-sweep" aria-hidden="true"></div><span class="radar-label label-near">NEARBY</span><span class="radar-label label-national">NATIONAL</span><span class="radar-label label-world">OVERSEAS</span><div class="radar-center"><img src="assets/buyless-icon.png" alt="" width="72" height="72"><span class="mono">YOUR CITY</span></div><span class="radar-point point-one" aria-hidden="true"></span><span class="radar-point point-two" aria-hidden="true"></span><span class="radar-point point-three" aria-hidden="true"></span></div></div>
+      <div class="world-footer mono"><span>Nearby shops</span><span>Domestic sellers</span><span>Destination-eligible imports</span></div>
+    </section>
+    <section class="trust section-pad" id="evidence" aria-labelledby="trust-title">
+      <div class="section-label mono"><span>04 / Know why</span><span>A low price needs a little proof.</span></div>
+      <div class="trust-heading"><h2 id="trust-title" class="display reveal">LOW PRICE.<br>OPEN EYES.</h2><div class="trust-intro reveal"><p>Confidence comes<br>from evidence.</p><p class="body-copy">BuyLess checks what’s behind an offer and tells you what’s still unknown. No magic authenticity promises. Just a clearer decision.</p></div></div>
+      <div class="evidence-list"><details><summary><span class="mono">01</span><span>The right product.</span><span class="detail-toggle" aria-hidden="true">+</span></summary><p>Brand, model, capacity, variant, condition, and region must match. A cheaper different model belongs in a separate comparison.</p></details><details><summary><span class="mono">02</span><span>The price you actually pay.</span><span class="detail-toggle" aria-hidden="true">+</span></summary><p>Compare eligible coupons, observed shipping, and known fees. Missing delivery costs stay visible. Cashback is separate from the money payable today.</p></details><details><summary><span class="mono">03</span><span>The seller behind the listing.</span><span class="detail-toggle" aria-hidden="true">+</span></summary><p>Check seller identity, relevant reviews, manufacturer-backed authorization, warranty, returns, and buyer protection. A seller’s claim alone is not proof.</p></details><details><summary><span class="mono">04</span><span>The limits of the evidence.</span><span class="detail-toggle" aria-hidden="true">+</span></summary><p>Online research cannot guarantee a physical item’s authenticity or a worldwide lowest price. BuyLess reports the lowest comparable cost among checked offers and flags gaps.</p></details></div>
+      <div class="trust-footer"><span class="mono">Research gets deeper when the risk gets higher.</span><p>Buying, paying, contacting sellers, and reserving remain separate actions that need your explicit instruction.</p></div>
+    </section>
+    <section class="install section-pad" id="install" aria-labelledby="install-title">
+      <div class="section-label mono"><span>05 / Make it yours</span><span>Open source. Ready for your AI.</span></div>
+      <div class="install-heading"><h2 id="install-title" class="display reveal">A SMALL SKILL.<br><span class="muted">A BETTER HABIT.</span></h2><a class="pill dark" href="https://github.com/alfahricireng12/buyless">Explore on GitHub <span aria-hidden="true">↗</span></a></div>
+      <div class="install-layout"><div class="install-context"><p>Bring BuyLess<br>to the AI you use.</p><p class="body-copy">You’ll need an AI host with web search or browser tools for current prices. BuyLess adds the shopping research skill; your host provides the tools.</p><a class="text-link" href="https://github.com/alfahricireng12/buyless/blob/main/docs/installation.md">Read installation & compatibility <span aria-hidden="true">↗</span></a></div><div class="terminal"><div class="host-tabs" role="group" aria-label="Choose your AI host"><button type="button" data-host="codex" aria-pressed="true">Codex plugin</button><button type="button" data-host="claude" aria-pressed="false">Claude Code</button><button type="button" data-host="cursor" aria-pressed="false">Cursor</button></div><p id="install-instruction" class="terminal-instruction">Add the public repository as a marketplace, then install:</p><div class="code-wrap"><pre><code id="install-code">codex plugin marketplace add alfahricireng12/buyless
+codex plugin add buyless@buyless-community</code></pre><button id="copy-command" class="copy-button" type="button" aria-label="Copy installation commands">Copy</button></div><p id="install-note" class="terminal-note">Open a new supported host session after installation. Plugin and web-tool availability depend on your host.</p><p class="mono copy-status" id="copy-status" role="status"></p><div class="terminal-bottom"><a href="https://github.com/alfahricireng12/buyless/releases/latest">Download release <span aria-hidden="true">↗</span></a><span class="mono">MIT LICENSE</span></div></div></div>
+      <div class="install-callout"><span class="mono">Then, just ask.</span><p>“I want to buy a laptop in Jakarta.”</p><span class="mono">One new item · destination currency · known delivery costs</span></div>
+    </section>
+    <footer class="footer section-pad"><div class="footer-top"><p>The next good find<br>starts with you.</p><a class="pill light" href="https://github.com/alfahricireng12/buyless">Get BuyLess <span aria-hidden="true">↗</span></a></div><div class="footer-wordmark" aria-label="BuyLess"><span>BUY</span><span>LESS<span class="footer-star" aria-hidden="true">✳</span></span></div><div class="footer-bottom mono"><span>Made by <a href="https://github.com/alfahricireng12">devino.als</a></span><div><a href="https://github.com/alfahricireng12/buyless/discussions">Community ↗</a><a href="https://github.com/alfahricireng12/buyless/blob/main/LICENSE">MIT license ↗</a><a href="#top">Back to top ↑</a></div><span>Spend less. Know why.</span></div></footer>
+  </main>
+  <button type="button" class="motion-control mono" id="motion-toggle" aria-pressed="false"><span class="motion-indicator" aria-hidden="true"></span><span id="motion-label">Pause motion</span></button>
+  <div class="reading-progress" aria-hidden="true"></div>
+</body>
+</html>
