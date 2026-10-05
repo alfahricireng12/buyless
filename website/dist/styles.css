@@ -219,15 +219,15 @@ h1, h2, h3, h4, p, figure { margin: 0; }
 .opening-intro { display: none; position: fixed; inset: 0; z-index: 90; background: var(--ink); pointer-events: none; overflow: hidden; place-items: center; }
 .intro-playing .opening-intro { display: grid; }
 .opening-brand { width: min(82vw, 1120px); text-align: center; }
-.opening-brand img { width: 100%; height: auto; transform-origin: top left; animation: opening-logo .6s var(--ease) both; }
-.intro-docking .opening-brand img { animation: logo-dock 1.05s cubic-bezier(.65,0,.2,1) both; }
+.opening-brand img { width: 100%; height: auto; transform-origin: top left; animation: opening-logo .85s var(--ease) both; }
+.intro-docking .opening-brand img { animation: logo-dock 1.8s cubic-bezier(.65,0,.2,1) both; }
 .opening-brand p { font-size: clamp(14px,1.8vw,24px); letter-spacing: -.03em; margin-top: 28px; animation: opening-copy .7s var(--ease) .25s both; }
 .opening-rule { display: block; height: 2px; background: var(--green); width: 100%; margin-top: 35px; transform-origin: left; animation: opening-rule 1.15s var(--ease) both; }
 .opening-caption { position: absolute; bottom: max(30px,env(safe-area-inset-bottom)); left: 9%; color: var(--soft); }
 .intro-docking .opening-brand p, .intro-docking .opening-rule, .intro-docking .opening-caption { animation: opening-fade .3s ease-out both; }
 .intro-sequence.js-motion .masthead .glyph, .intro-sequence.js-motion .intro-poster { animation: none; }
 .intro-sequence:not(.page-entering) main, .intro-sequence:not(.page-entering) .masthead-meta, .intro-sequence:not(.page-entering) .chapter-nav { opacity: 0; }
-.intro-sequence.page-entering.js-motion main { animation: page-reveal .9s ease-out both; }
+.intro-sequence.page-entering.js-motion main { animation: page-reveal 1.2s ease-out both; }
 .intro-sequence.page-entering.js-motion .intro-poster { animation: poster-in .95s var(--ease) .1s both; }
 .intro-sequence.page-entering.js-motion .intro-caption { animation: opening-copy .85s var(--ease) .15s both; }
 .intro-sequence.page-entering.js-motion .intro-satellite, .intro-sequence.page-entering.js-motion .masthead-meta, .intro-sequence.page-entering.js-motion .chapter-nav { animation: opening-copy .7s var(--ease) both; }

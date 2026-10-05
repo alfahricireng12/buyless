@@ -168,9 +168,9 @@
       if (!start.width || !destination.width) { finishIntro(); return; }
       logo.style.setProperty('--dock-transform', `translate(${destination.left - start.left}px, ${destination.top - start.top}px) scale(${destination.width / start.width})`);
       root.classList.add('intro-docking');
-      introTimer = window.setTimeout(finishIntro, 1080);
+      introTimer = window.setTimeout(finishIntro, 1830);
     };
-    introTimer = window.setTimeout(dockLogo, 650);
+    introTimer = window.setTimeout(dockLogo, 1700);
     ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((event) => {
       window.addEventListener(event, finishIntro, { once: true, passive: true });
     });
