@@ -17,6 +17,11 @@
   let tiltFrame = 0;
   let pointerPosition = null;
   let priceAnimation = null;
+  let introTimer = 0;
+  const finishIntro = () => {
+    window.clearTimeout(introTimer);
+    root.classList.remove('intro-playing');
+  };
   const clamp = (value) => Math.min(1, Math.max(0, value));
 
   const updateScroll = () => {
@@ -84,6 +89,7 @@
     root.classList.toggle('motion-paused', paused);
     root.classList.toggle('js-motion', !paused);
     if (paused) {
+      finishIntro();
       document.querySelectorAll('.reveal').forEach((element) => element.classList.add('is-visible'));
       resetPosterTilt();
       priceAnimation?.cancel();
@@ -144,6 +150,20 @@
   window.addEventListener('load', scheduleScroll, { once: true });
   document.fonts?.ready.then(scheduleScroll);
   setMotion();
+
+  // A brief brand entrance on the home view; deep links stay immediately visible.
+  if (!paused && (!window.location.hash || window.location.hash === '#top') && window.scrollY < 20
+      && performance.getEntriesByType('navigation')[0]?.type !== 'back_forward') {
+    root.classList.add('intro-sequence', 'intro-playing');
+    introTimer = window.setTimeout(finishIntro, 2200);
+    const skipIntro = () => {
+      finishIntro();
+      root.classList.remove('intro-sequence');
+    };
+    ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((event) => {
+      window.addEventListener(event, skipIntro, { once: true, passive: true });
+    });
+  }
 
   const scenarios = {
     manchester: { prompt: '“Find me headphones in Manchester.”', product: 'Wireless headphones · new · one item', total: '£189', item: '£209', coupon: '−£20', shipping: '£0', other: '£219 total', risky: '£139 + unknown fees' },
