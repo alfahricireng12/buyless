@@ -217,16 +217,20 @@ h1, h2, h3, h4, p, figure { margin: 0; }
 .chapter-nav a:hover, .chapter-nav a[aria-current=location] { background: var(--paper); color: var(--ink); }
 .reading-progress { position: fixed; top: 0; left: 0; height: 2px; width: 100%; transform: scaleX(0); transform-origin: left; background: var(--green); z-index: 50; pointer-events: none; }
 .opening-intro { display: none; position: fixed; inset: 0; z-index: 90; background: var(--ink); pointer-events: none; overflow: hidden; place-items: center; }
-.intro-playing .opening-intro { display: grid; animation: opening-curtain .85s cubic-bezier(.76,0,.24,1) 1.2s both; }
-.opening-brand { width: min(82vw, 1120px); text-align: center; animation: opening-brand .95s var(--ease) both; }
-.opening-brand img { width: 100%; height: auto; }
+.intro-playing .opening-intro { display: grid; }
+.opening-brand { width: min(82vw, 1120px); text-align: center; }
+.opening-brand img { width: 100%; height: auto; transform-origin: top left; animation: opening-logo .6s var(--ease) both; }
+.intro-docking .opening-brand img { animation: logo-dock 1.05s cubic-bezier(.65,0,.2,1) both; }
 .opening-brand p { font-size: clamp(14px,1.8vw,24px); letter-spacing: -.03em; margin-top: 28px; animation: opening-copy .7s var(--ease) .25s both; }
 .opening-rule { display: block; height: 2px; background: var(--green); width: 100%; margin-top: 35px; transform-origin: left; animation: opening-rule 1.15s var(--ease) both; }
 .opening-caption { position: absolute; bottom: max(30px,env(safe-area-inset-bottom)); left: 9%; color: var(--soft); }
-.intro-sequence.js-motion .masthead .glyph { animation-delay: calc(.8s + var(--glyph) * 55ms); }
-.intro-sequence.js-motion .intro-poster { animation-delay: 1.1s; }
-.intro-sequence.js-motion .intro-caption { animation: opening-copy .8s var(--ease) 1.2s both; }
-.intro-sequence.js-motion .intro-satellite, .intro-sequence.js-motion .masthead-meta { animation: opening-copy .7s var(--ease) 1.3s both; }
+.intro-docking .opening-brand p, .intro-docking .opening-rule, .intro-docking .opening-caption { animation: opening-fade .3s ease-out both; }
+.intro-sequence.js-motion .masthead .glyph, .intro-sequence.js-motion .intro-poster { animation: none; }
+.intro-sequence:not(.page-entering) main, .intro-sequence:not(.page-entering) .masthead-meta, .intro-sequence:not(.page-entering) .chapter-nav { opacity: 0; }
+.intro-sequence.page-entering.js-motion main { animation: page-reveal .9s ease-out both; }
+.intro-sequence.page-entering.js-motion .intro-poster { animation: poster-in .95s var(--ease) .1s both; }
+.intro-sequence.page-entering.js-motion .intro-caption { animation: opening-copy .85s var(--ease) .15s both; }
+.intro-sequence.page-entering.js-motion .intro-satellite, .intro-sequence.page-entering.js-motion .masthead-meta, .intro-sequence.page-entering.js-motion .chapter-nav { animation: opening-copy .7s var(--ease) both; }
 .motion-paused .opening-intro { display: none; }
 button:active, a:active { opacity: .8; }
 .motion-paused *, .motion-paused *::before, .motion-paused *::after { animation: none !important; transition: none !important; }
@@ -240,8 +244,10 @@ button:active, a:active { opacity: .8; }
 @keyframes glyph-in { from { opacity: 0; transform: translateY(200px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes masthead-in { from { opacity: 0; transform: translateY(35px); } to { opacity: 1; transform: none; } }
 @keyframes note-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-@keyframes opening-curtain { to { transform: translateY(-100%); } }
-@keyframes opening-brand { from { opacity: 0; transform: translateY(28px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes opening-logo { from { opacity: 0; } to { opacity: 1; } }
+@keyframes logo-dock { from { transform: none; } to { transform: var(--dock-transform); } }
+@keyframes opening-fade { from { opacity: 1; } to { opacity: 0; } }
+@keyframes page-reveal { from { opacity: 0; } to { opacity: 1; } }
 @keyframes opening-copy { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 @keyframes opening-rule { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @media (min-width: 1700px) {

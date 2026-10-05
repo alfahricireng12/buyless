@@ -20,7 +20,8 @@
   let introTimer = 0;
   const finishIntro = () => {
     window.clearTimeout(introTimer);
-    root.classList.remove('intro-playing');
+    root.classList.remove('intro-playing', 'intro-docking');
+    if (root.classList.contains('intro-sequence')) root.classList.add('page-entering');
   };
   const clamp = (value) => Math.min(1, Math.max(0, value));
 
@@ -155,14 +156,25 @@
   if (!paused && (!window.location.hash || window.location.hash === '#top') && window.scrollY < 20
       && performance.getEntriesByType('navigation')[0]?.type !== 'back_forward') {
     root.classList.add('intro-sequence', 'intro-playing');
-    introTimer = window.setTimeout(finishIntro, 2200);
-    const skipIntro = () => {
-      finishIntro();
-      root.classList.remove('intro-sequence');
+    const dockLogo = () => {
+      const logo = document.querySelector('.opening-brand img');
+      const masthead = document.querySelector('.masthead');
+      if (!logo || !masthead || paused || !root.classList.contains('intro-playing')) {
+        finishIntro();
+        return;
+      }
+      const start = logo.getBoundingClientRect();
+      const destination = masthead.getBoundingClientRect();
+      if (!start.width || !destination.width) { finishIntro(); return; }
+      logo.style.setProperty('--dock-transform', `translate(${destination.left - start.left}px, ${destination.top - start.top}px) scale(${destination.width / start.width})`);
+      root.classList.add('intro-docking');
+      introTimer = window.setTimeout(finishIntro, 1080);
     };
+    introTimer = window.setTimeout(dockLogo, 650);
     ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((event) => {
-      window.addEventListener(event, skipIntro, { once: true, passive: true });
+      window.addEventListener(event, finishIntro, { once: true, passive: true });
     });
+    window.addEventListener('resize', finishIntro, { once: true, passive: true });
   }
 
   const scenarios = {

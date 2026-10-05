@@ -22,7 +22,7 @@ Desktop exterior margins are 16px and chapter gutters 4%. Mobile uses 12px exter
 
 ## Motion and interaction
 
-A 2.2-second home entrance presents the BuyLess wordmark, tagline, and green rule before lifting the charcoal curtain into the page. Header lettering, the poster, and copy enter in sequence. Scroll, pointer, touch, or keyboard input skips the curtain immediately. Deep links, browser history returns, and reduced-motion preferences bypass the opening; without JavaScript the content stays visible.
+The home entrance presents the BuyLess wordmark at the center, then moves and scales that same lettering to the measured header position over 1.05 seconds. Only after it arrives do the menu, page, poster, and copy fade in. The landing SVG matches the intro SVG to avoid a visible swap. Scroll, pointer, touch, keyboard input, or resizing skips the entrance immediately. Deep links, browser history returns, and reduced-motion preferences bypass the opening; without JavaScript the content stays visible.
 
 Header glyphs enter in sequence. The poster reveals and responds subtly to a fine-pointer hover. Scroll sets a bounded `--phase` on each exhibit in one rAF pass; sticky stages move the vertical collage and circular diagram. Prices transition on preset changes. No scroll interception, automatic purchases, fake live research, or invented testimonials.
 
