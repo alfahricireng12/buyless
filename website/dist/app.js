@@ -9,9 +9,26 @@
     .map((link) => ({ link, target: document.getElementById(link.hash.slice(1)) }))
     .filter(({ target }) => target);
   const exhibits = [...document.querySelectorAll('[data-choreo]')]
-    .map((section) => ({ section, stage: section.querySelector('.exhibit-stage') }));
+    .map((section) => ({
+      section,
+      stage: section.querySelector('.exhibit-stage, .intro-stage') || section,
+      phase: 0.5,
+      view: 0.5,
+      targetPhase: 0.5,
+      targetView: 0.5,
+      initialized: false
+    }));
+  const scrollRevealElements = [...document.querySelectorAll('[data-scroll-reveal]')];
+  const scrollRevealVisibility = new Map();
+  let scrollReveals = null;
   let paused = reducedMotion.matches;
   let scrollFrame = 0;
+  let scrollDirty = true;
+  let lastFrameTime = 0;
+  let pageProgress = 0;
+  let targetPageProgress = 0;
+  let scrollInitialized = false;
+  let activeChapter = null;
   let tiltFrame = 0;
   let pointerPosition = null;
   let priceAnimation = null;
@@ -23,37 +40,86 @@
   };
   const clamp = (value) => Math.min(1, Math.max(0, value));
 
-  const updateScroll = () => {
+  const updateScroll = (timestamp) => {
     scrollFrame = 0;
-    if (document.hidden) return;
+    if (document.hidden) { lastFrameTime = 0; return; }
 
-    // Read geometry as one batch before writing the exhibition's visual state.
-    const viewportHeight = window.innerHeight;
-    const range = root.scrollHeight - viewportHeight;
-    const pageProgress = clamp(range > 0 ? window.scrollY / range : 0);
-    const geometry = exhibits.map(({ section, stage }) => {
-      const bounds = section.getBoundingClientRect();
-      const travel = Math.max(bounds.height - viewportHeight, viewportHeight * 0.5);
-      return { section, stage, phase: paused ? 0.5 : clamp(-bounds.top / travel) };
-    });
-    const chapterGeometry = chapters.map(({ link, target }) => ({ link, bounds: target.getBoundingClientRect() }));
-    const chapterLine = viewportHeight * 0.42;
-    const currentChapter = (chapterGeometry.find(({ bounds }) => bounds.top <= chapterLine && bounds.bottom > chapterLine)
-      || chapterGeometry.find(({ bounds }) => bounds.top < viewportHeight && bounds.bottom > 0))?.link;
+    const elapsed = lastFrameTime ? Math.min(timestamp - lastFrameTime, 64) : 1000 / 60;
+    lastFrameTime = timestamp;
+    const blend = paused ? 1 : 1 - Math.exp(-elapsed / 95);
+    let chapterChanged = false;
 
+    // Geometry is read only when native scrolling or layout changes mark it dirty.
+    if (scrollDirty) {
+      const viewportHeight = window.innerHeight;
+      const range = root.scrollHeight - viewportHeight;
+      targetPageProgress = clamp(range > 0 ? window.scrollY / range : 0);
+      exhibits.forEach((exhibit) => {
+        const bounds = exhibit.section.getBoundingClientRect();
+        const travel = Math.max(bounds.height - viewportHeight, viewportHeight * 0.5);
+        exhibit.targetPhase = paused ? 0.5 : clamp(-bounds.top / travel);
+        exhibit.targetView = paused ? 0.5 : clamp((viewportHeight - bounds.top) / (viewportHeight + bounds.height));
+        if (!exhibit.initialized || paused) {
+          exhibit.phase = exhibit.targetPhase;
+          exhibit.view = exhibit.targetView;
+          exhibit.initialized = true;
+        }
+      });
+      const chapterGeometry = chapters.map(({ link, target }) => ({ link, bounds: target.getBoundingClientRect() }));
+      const chapterLine = viewportHeight * 0.42;
+      const currentChapter = (chapterGeometry.find(({ bounds }) => bounds.top <= chapterLine && bounds.bottom > chapterLine)
+        || chapterGeometry.find(({ bounds }) => bounds.top < viewportHeight && bounds.bottom > 0))?.link;
+      if (currentChapter !== activeChapter) {
+        activeChapter = currentChapter;
+        chapterChanged = true;
+      }
+      if (!scrollInitialized) { pageProgress = targetPageProgress; scrollInitialized = true; }
+      scrollDirty = false;
+    }
+
+    // Time-based damping is independent of display refresh rate and stops at rest.
+    const epsilon = 0.00035;
+    let settling = false;
+    const approach = (current, target) => {
+      const next = current + (target - current) * blend;
+      if (Math.abs(target - next) <= epsilon) return target;
+      settling = true;
+      return next;
+    };
+    pageProgress = approach(pageProgress, targetPageProgress);
     if (progress) progress.style.transform = `scaleX(${pageProgress})`;
-    geometry.forEach(({ section, stage, phase }) => {
-      const value = phase.toFixed(4);
-      section.style.setProperty('--phase', value);
-      if (stage) stage.style.setProperty('--phase', value);
+    exhibits.forEach((exhibit) => {
+      exhibit.phase = approach(exhibit.phase, exhibit.targetPhase);
+      exhibit.view = approach(exhibit.view, exhibit.targetView);
+      const phase = exhibit.phase.toFixed(5);
+      const view = exhibit.view.toFixed(5);
+      exhibit.section.style.setProperty('--phase', phase);
+      exhibit.section.style.setProperty('--view', view);
+      if (exhibit.stage !== exhibit.section) {
+        exhibit.stage.style.setProperty('--phase', phase);
+        exhibit.stage.style.setProperty('--view', view);
+      }
     });
-    chapters.forEach(({ link }) => {
-      if (link === currentChapter) link.setAttribute('aria-current', 'location');
+    if (chapterChanged) chapters.forEach(({ link }) => {
+      if (link === activeChapter) link.setAttribute('aria-current', 'location');
       else link.removeAttribute('aria-current');
     });
+    if (settling && !paused) scrollFrame = window.requestAnimationFrame(updateScroll);
+    else lastFrameTime = 0;
   };
   const scheduleScroll = () => {
+    scrollDirty = true;
     if (!scrollFrame && !document.hidden) scrollFrame = window.requestAnimationFrame(updateScroll);
+  };
+  const syncScrollReveals = () => {
+    scrollRevealElements.forEach((element) => {
+      const focused = element === document.activeElement || element.contains(document.activeElement);
+      if (paused || focused) {
+        scrollRevealVisibility.set(element, true);
+        scrollReveals?.unobserve(element);
+      }
+      element.classList.toggle('is-visible', scrollRevealVisibility.get(element) === true);
+    });
   };
   const resetPosterTilt = () => {
     if (tiltFrame) window.cancelAnimationFrame(tiltFrame);
@@ -94,6 +160,8 @@
       priceAnimation?.cancel();
       priceAnimation = null;
     }
+    syncScrollReveals();
+    lastFrameTime = 0;
     updateAmbient();
     scheduleScroll();
   };
@@ -107,6 +175,18 @@
     });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach((element) => reveals.observe(element));
+  scrollReveals = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        scrollRevealVisibility.set(entry.target, true);
+        scrollReveals.unobserve(entry.target);
+      }
+    });
+    syncScrollReveals();
+  }, { threshold: 0.06 });
+  scrollRevealElements.forEach((element) => scrollReveals.observe(element));
+  document.addEventListener('focusin', syncScrollReveals);
+  document.addEventListener('focusout', () => window.queueMicrotask(syncScrollReveals));
 
   // Ambient animation is suspended outside the viewport and while the tab is hidden.
   const ambient = document.querySelectorAll('[data-ambient], .asterisk, .tiny-orbit, .ticker-track, .radar-sweep, .radar-point, .footer-star, .gallery-marquee-track');
@@ -125,6 +205,8 @@
       scrollFrame = 0;
     }
     if (document.hidden) {
+      lastFrameTime = 0;
+      scrollDirty = true;
       resetPosterTilt();
       priceAnimation?.cancel();
       priceAnimation = null;
@@ -135,6 +217,8 @@
   window.addEventListener('scroll', scheduleScroll, { passive: true });
   window.addEventListener('resize', scheduleScroll, { passive: true });
   window.addEventListener('load', scheduleScroll, { once: true });
+  window.addEventListener('pageshow', scheduleScroll);
+  document.addEventListener('toggle', scheduleScroll, { capture: true });
   document.fonts?.ready.then(scheduleScroll);
   setMotion();
 
@@ -189,6 +273,7 @@
       priceAnimation = animation;
       animation.onfinish = () => { if (priceAnimation === animation) priceAnimation = null; };
     }
+    scheduleScroll();
   };
   const resetDemo = () => {
     runId += 1;
@@ -237,6 +322,7 @@
     document.getElementById('install-instruction').textContent = data.instruction;
     document.getElementById('install-note').textContent = data.note;
     copyStatus.textContent = '';
+    scheduleScroll();
   }));
   document.getElementById('copy-command').addEventListener('click', async () => {
     try {
