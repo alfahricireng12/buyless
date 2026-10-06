@@ -2,7 +2,6 @@
   'use strict';
   const root = document.documentElement;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const progress = document.querySelector('.reading-progress');
   const introPoster = document.querySelector('.intro-poster');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
   const chapters = [...document.querySelectorAll('.chapter-nav a[href^="#"]')]
@@ -25,9 +24,6 @@
   let scrollFrame = 0;
   let scrollDirty = true;
   let lastFrameTime = 0;
-  let pageProgress = 0;
-  let targetPageProgress = 0;
-  let scrollInitialized = false;
   let activeChapter = null;
   let tiltFrame = 0;
   let pointerPosition = null;
@@ -52,8 +48,6 @@
     // Geometry is read only when native scrolling or layout changes mark it dirty.
     if (scrollDirty) {
       const viewportHeight = window.innerHeight;
-      const range = root.scrollHeight - viewportHeight;
-      targetPageProgress = clamp(range > 0 ? window.scrollY / range : 0);
       exhibits.forEach((exhibit) => {
         const bounds = exhibit.section.getBoundingClientRect();
         const travel = Math.max(bounds.height - viewportHeight, viewportHeight * 0.5);
@@ -73,7 +67,6 @@
         activeChapter = currentChapter;
         chapterChanged = true;
       }
-      if (!scrollInitialized) { pageProgress = targetPageProgress; scrollInitialized = true; }
       scrollDirty = false;
     }
 
@@ -86,8 +79,6 @@
       settling = true;
       return next;
     };
-    pageProgress = approach(pageProgress, targetPageProgress);
-    if (progress) progress.style.transform = `scaleX(${pageProgress})`;
     exhibits.forEach((exhibit) => {
       exhibit.phase = approach(exhibit.phase, exhibit.targetPhase);
       exhibit.view = approach(exhibit.view, exhibit.targetView);
